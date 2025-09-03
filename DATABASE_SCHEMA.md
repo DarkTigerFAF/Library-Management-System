@@ -17,8 +17,8 @@
 │ password_hash        VARCHAR│         │ isbn (UNIQUE)        VARCHAR│
 │ role                 ENUM   │         │ available_quantity   INT    │
 │ registered_date      DATE   │         │ shelf_location       VARCHAR│
-│ created_at          TIMESTAMP        │ created_at          TIMESTAMP
-│ updated_at          TIMESTAMP        │ updated_at          TIMESTAMP
+│ created_at          TIMESTAMP         │ created_at          TIMESTAMP
+│ updated_at          TIMESTAMP         │ updated_at          TIMESTAMP
 └─────────────────────────────┘         └─────────────────────────────┘
             │                                         │
             │                                         │
@@ -26,7 +26,7 @@
             │                                         │
             │                                         │
             └─────────────────┐       ┌───────────────┘
-                              │       │
+                            M │       │ M
                               ▼       ▼
                     ┌─────────────────────────────┐
                     │       BORROW_RECORDS        │
@@ -40,7 +40,7 @@
                     │ created_at          TIMESTAMP
                     │ updated_at          TIMESTAMP
                     └─────────────────────────────┘
-                              ∞       ∞
+                   
 ```
 
 ## Table Details
@@ -105,12 +105,12 @@
 ## Relationships
 
 ```
-USERS (1) ──────────── (∞) BORROW_RECORDS
+USERS (1) ──────────── (M) BORROW_RECORDS
   │                           │
   └── One user can have ──────┘
       multiple borrow records
 
-BOOKS (1) ──────────── (∞) BORROW_RECORDS  
+BOOKS (1) ──────────── (M) BORROW_RECORDS  
   │                           │
   └── One book can have ──────┘
       multiple borrow records
@@ -121,12 +121,12 @@ BOOKS (1) ──────────── (∞) BORROW_RECORDS
 1. **Users → Borrow Records** (One-to-Many)
    - One user can have multiple borrow records
    - Foreign Key: `borrow_records.user_id` → `users.id`
-   - Cascade: Restrict deletion if user has active loans
+   - Cascade: Restrict deletion if the user has active loans
 
 2. **Books → Borrow Records** (One-to-Many)
    - One book can have multiple borrow records
    - Foreign Key: `borrow_records.book_id` → `books.id`
-   - Cascade: Restrict deletion if book has active loans
+   - Cascade: Restrict deletion if the book has active loans
 
 ## Business Rules
 
