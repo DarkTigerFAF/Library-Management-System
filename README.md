@@ -12,8 +12,11 @@ DB_HOST=localhost
 DB_PORT=5433
 DB_NAME=mydatabase
 DB_USER=myuser
-DB_PASS=mypassword
+DB_PASSWORD=mypassword
+DATABASE_URL=postgres://myuser:mypassword@localhost:5432/mydatabase
 JWT_SECRET=supersecretjwt
+REDIS_HOST=localhost
+REDIS_PORT=6379
 ```
 
 2) Start Postgres (Docker):
@@ -62,7 +65,7 @@ Test uses the same DB connection; ensure your DB is running or set a separate te
 
 ## Notes
 
-- JWT-based RBAC with roles: ADMIN, BORROWER. Admin can manage catalog and users; borrowers can read catalog and manage their own profile/loans.
+- JWT-based RBAC with roles: ADMIN, BORROWER. Admin can manage the catalog and users; borrowers can read the catalog and manage their own profile/loans.
 - Validation prevents common injection and malformed inputs.
 - Rate limiting: `GET /api/books` uses a dynamic limiter—tighter limit when `q` is provided (search), looser when listing.
-- Redis cache-aside for hot reads on books list/search with short TTL.
+- Redis cache-aside for hot reads on the books list/search with short TTL.
